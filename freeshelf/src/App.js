@@ -8,7 +8,6 @@ class App extends Component {
     super()
     this.state = {
       booki : 0,
-      readMore: true
     }
   }
 
@@ -20,26 +19,15 @@ class App extends Component {
     console.log(this.state.booki)
   }
 
-  clickForMore() {
-    this.setState({
-      readMore : !this.state.readMore
-    })
-      console.log(this.state.readMore)
-     
-
-    // console.log('more')
-  }
+ 
   
   render() {
     return (
       <div className="App">
-       <h1>{books[this.state.booki].title}</h1>
-       <p>{books[this.state.booki].author}</p>
-       <p>{books[this.state.booki].shortDescription}</p>
-       <img src = {books[this.state.booki].coverImageUrl}/>
-       {/* <button onClick={this.booksOnPage.bind(this)}>Click me</button> */}
-       <button onClick={this.clickForMore.bind(this)}>CLICK</button>
-       <CreateBook more = {this.state.readMore} />
+      {books.map(function(book){
+       return <Book bookData={book} />
+      })}
+      
        
       </div>
     );
@@ -73,20 +61,31 @@ class Book extends Component {
   constructor () {
     super()
     this.state = {
-      booki : 0,
       readMore: true
     }
+
+  }
+
+  clickForMore() {
+    this.setState({
+      readMore : !this.state.readMore
+    })
+      console.log(this.state.readMore)
+     
+
+    // console.log('more')
   }
 
   
   render() {
     return (
       <div>
-       <h1>{books[this.state.booki].title}</h1>
-       <p>{books[this.state.booki].author}</p>
-       <p>{books[this.state.booki].shortDescription}</p>
-       <img src = {books[this.state.booki].coverImageUrl}/>
+       <h1>{this.props.bookData.title}</h1>
+       <p>{this.props.bookData.author}</p>
+       <p>{this.props.bookData.shortDescription}</p>
+       <img src = {this.props.bookData.coverImageUrl}/>
        {/* <button onClick={this.booksOnPage.bind(this)}>Click me</button> */}
+       <br/>
        <button onClick={this.clickForMore.bind(this)}>CLICK</button>
        <CreateBook more = {this.state.readMore} />
        
@@ -99,7 +98,7 @@ class CreateBook extends Component {
   
   render() {
     const moreContent = this.props.more
-    console.log(moreContent + 'here')
+    console.log(moreContent)
   return (
     <div>
       {moreContent ?(
@@ -108,7 +107,7 @@ class CreateBook extends Component {
           <p>{books[0].author}</p>
         </div>
       ) : (
-        <h1>bye</h1>
+        ''
       )}
     </div>
     
